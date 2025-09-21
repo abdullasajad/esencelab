@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Esencelab - Student Super App</title>
+    <meta name="description" content="Your personal career development companion. Track progress, find opportunities, and bridge skill gaps." />
+    
+    <!-- Preload fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Meta tags for PWA -->
+    <meta name="theme-color" content="#1B155C" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="Esencelab - Student Super App" />
+    <meta property="og:description" content="Your personal career development companion" />
+    <meta property="og:type" content="website" />
+    
+    <style>
+      /* Prevent flash of unstyled content */
+      body {
+        font-family: 'Inter', system-ui, sans-serif;
+        background-color: #000000;
+        color: #ffffff;
+      }
+      
+      /* Loading spinner */
+      .loading-spinner {
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        border: 3px solid rgba(255,255,255,.3);
+        border-radius: 50%;
+        border-top-color: #fff;
+        animation: spin 1s ease-in-out infinite;
+      }
+      
+      @keyframes spin {
+        to { transform: rotate(360deg); }
+      }
+      
+      /* Custom scrollbar */
+      ::-webkit-scrollbar {
+        width: 6px;
+      }
+      
+      ::-webkit-scrollbar-track {
+        background: #202124;
+      }
+      
+      ::-webkit-scrollbar-thumb {
+        background: #5f6368;
+        border-radius: 3px;
+      }
+      
+      ::-webkit-scrollbar-thumb:hover {
+        background: #80868b;
+      }
+    </style>
+  </head>
+  <body class="bg-dark-950 text-white antialiased">
+    <div id="root">
+      <!-- Loading fallback -->
+      <div class="min-h-screen flex items-center justify-center">
+        <div class="text-center">
+          <div class="loading-spinner mx-auto mb-4"></div>
+          <p class="text-gray-400">Loading Esencelab...</p>
+        </div>
+      </div>
+    </div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

@@ -1,0 +1,35 @@
+{
+  "version": 2,
+  "name": "sngcet-portal",
+  "builds": [
+    {
+      "src": "client/package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "build"
+      }
+    },
+    {
+      "src": "server/index.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/server/index.js"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/client/build/index.html"
+    }
+  ],
+  "env": {
+    "NODE_ENV": "production"
+  },
+  "build": {
+    "env": {
+      "REACT_APP_API_URL": "https://sngcet-portal.vercel.app/api"
+    }
+  }
+}

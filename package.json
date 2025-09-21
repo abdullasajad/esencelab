@@ -1,0 +1,28 @@
+{
+  "name": "esencelab-student-app",
+  "version": "1.0.0",
+  "description": "Student Super App for career development and skill tracking",
+  "main": "server/index.js",
+  "scripts": {
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "cd server && npm run dev",
+    "client": "cd client && npm run dev",
+    "build": "cd client && npm run build",
+    "start": "cd server && npm start",
+    "install-all": "npm install && cd server && npm install && cd ../client && npm install",
+    "seed": "cd server && npm run seed",
+    "docker:build": "docker-compose build",
+    "docker:up": "docker-compose up -d",
+    "docker:down": "docker-compose down",
+    "docker:logs": "docker-compose logs -f",
+    "test": "cd server && npm test && cd ../client && npm test",
+    "lint": "cd server && npm run lint && cd ../client && npm run lint",
+    "clean": "rm -rf node_modules server/node_modules client/node_modules client/dist server/uploads"
+  },
+  "keywords": ["student", "career", "education", "skills", "jobs"],
+  "author": "Esencelab Team",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}

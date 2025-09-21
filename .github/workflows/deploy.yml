@@ -1,0 +1,83 @@
+name: 🚀 SNGCET Portal - Auto Deploy
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  # Frontend Build & Deploy to Netlify
+  frontend:
+    name: 📱 Frontend (Netlify)
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: 📥 Checkout Code
+      uses: actions/checkout@v4
+      
+    - name: 🟢 Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+        cache-dependency-path: client/package-lock.json
+        
+    - name: 📦 Install Dependencies
+      run: |
+        cd client
+        npm ci
+        
+    - name: 🏗️ Build Frontend
+      run: |
+        cd client
+        npm run build
+      env:
+        VITE_API_URL: ${{ secrets.VITE_API_URL }}
+        VITE_APP_NAME: SNGCET Portal
+        VITE_COLLEGE_NAME: SNGCET College
+        VITE_ENVIRONMENT: production
+        
+    - name: 🚀 Deploy to Netlify
+      uses: netlify/actions/cli@master
+      with:
+        args: deploy --prod --dir=client/dist
+      env:
+        NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+        NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+
+  # Backend Deploy to Railway
+  backend:
+    name: 🖥️ Backend (Railway)
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: 📥 Checkout Code
+      uses: actions/checkout@v4
+      
+    - name: 🚀 Deploy to Railway
+      uses: railway-deploy/railway-deploy@v3
+      with:
+        railway_token: ${{ secrets.RAILWAY_TOKEN }}
+        service: sngcet-portal-api
+        
+  # Health Check
+  health-check:
+    name: 🏥 Health Check
+    runs-on: ubuntu-latest
+    needs: [frontend, backend]
+    
+    steps:
+    - name: 🔍 Test Frontend
+      run: |
+        curl -f ${{ secrets.FRONTEND_URL }} || exit 1
+        
+    - name: 🔍 Test Backend API
+      run: |
+        curl -f ${{ secrets.BACKEND_URL }}/api/health || exit 1
+        
+    - name: ✅ Deployment Success
+      run: |
+        echo "🎉 SNGCET Portal deployed successfully!"
+        echo "📱 Frontend: ${{ secrets.FRONTEND_URL }}"
+        echo "🖥️ Backend: ${{ secrets.BACKEND_URL }}"

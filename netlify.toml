@@ -1,0 +1,26 @@
+[build]
+  base = "client"
+  publish = "client/dist"
+  command = "npm run build"
+
+[build.environment]
+  VITE_API_URL = "https://sngcet-portal-api.railway.app"
+  VITE_APP_NAME = "SNGCET Portal"
+  VITE_COLLEGE_NAME = "SNGCET College"
+  VITE_ENVIRONMENT = "production"
+
+[[redirects]]
+  from = "/api/*"
+  to = "https://sngcet-portal-api.railway.app/api/:splat"
+  status = 200
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+[context.production.environment]
+  REACT_APP_ENV = "production"
+
+[context.deploy-preview.environment]
+  REACT_APP_ENV = "preview"
